@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/RobotoMono-Medium.ttf')
+}
+
+$background: #002952;
+$foreground: #D9D9D9;
+$darktext: #696969;
+$baseSize: 16px;
+
+@mixin visuallyHidden() {
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}

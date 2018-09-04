@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    // Compiled module type. Node uses CommonJS.
+    "module": "commonjs",
+
+    // Target language level
+    "target": "es2016",
+
+    // Explodes if type cannot be inferred
+    "noImplicitAny": true,
+
+    // Don't assume any type may also be a null
+    "strictNullChecks": true,
+
+    // Follow module paths like a Node app
+    "moduleResolution": "node",
+
+    // Where to output compiled code
+    "outDir": "../dist",
+
+    // Allow ES2015-style default imports from files with no explicit export-default
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    // Transpile JSX files to React-Hyperscript
+    "jsx": "react"
+  },
+  "include": ["script/**/*", "types/*"],
+  "exclude": ["node_modules"]
+}
