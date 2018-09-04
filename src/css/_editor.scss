@@ -1,48 +1,27 @@
 .editor {
-  background: $background;
-  height: 100%;
-
-  display: grid;
-  grid-template-columns: [left] auto [right];
-  grid-template-rows: [top] min-content [top-1] auto [bottom-1] min-content [bottom];
-
-  color: $foreground;
-  font-size: $baseSize;
-  box-sizing: border-box;
-}
-
-.editor__head {
-  border-bottom: 1px solid $foreground;
-  padding: $baseSize;
-}
-
-.editor--loading .editor__head {
-  color: $darktext;
-}
-
-.editor__body {
-  padding: 0 0 0 $baseSize;
-  position: relative;
-
-  label {
-    @include visuallyHidden();
-  }
-
-  textarea {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    display: block;
-    padding: 8px 0 0 0;
-    resize: none;
-
-    background: transparent;
-    color: $foreground;
-    border: none;
-    font-size: $baseSize; 
-
-    &:focus {
-      outline: 0;
+    padding: 0 0 0 $baseSize;
+    position: relative;
+  
+    label {
+      @include visuallyHidden();
+    }
+  
+    textarea {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      display: block;
+      padding: 8px 0 0 0;
+      resize: none;
+  
+      background: transparent;
+      color: $midground;
+      border: none;
+      font-size: $baseSize; 
+  
+      &:focus {
+        outline: 0;
+        color: $foreground;
+      }
     }
   }
-}

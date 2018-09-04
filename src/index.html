@@ -6,13 +6,23 @@
     <link rel="stylesheet" href="css/style.scss"/>
 </head>
 <body>
-    <div class="editor editor--loading" id="editor">
-        <div class="editor__head" id="editorHead">Loading functionality...</div>
-        <form class="editor__body">
+    <div class="app">
+        <div class="toolbar toolbar--loading" id="toolbar">
+            <div class="toolbar__load-msg">Hang about...</div>
+            <div class="toolbar__buttons">
+                <button class="btn">Load</button>
+                <button class="btn">Save</button>
+            </div>
+            <div class="toolbar__stats">
+                <span id="filename"></span>
+                <!-- <span>401 words</span> -->
+                <!-- <span id="timer">1h 14m</span> -->
+            </div>
+        </div>
+        <form class="editor">
             <label for="textArea">Editor</label>
             <textarea id="textArea"></textarea>
         </form>
-        <div class="editor__foot"></div>
     </div>
     <script src="script/index.ts"></script>
 </body>

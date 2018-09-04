@@ -1,0 +1,55 @@
+.toolbar {
+    border-bottom: 1px solid $foreground;
+    padding: $baseSize;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &__buttons {
+        .btn + .btn {
+            margin-left: $baseSize * 1.25;
+        }
+    }
+
+    &__load-msg {
+        display: none;
+    }
+
+    &__stats {
+        color: $darktext;
+        span + span {
+            margin-left: $baseSize * 1.25;
+        }
+    }
+}
+
+.toolbar--loading {
+    .toolbar__load-msg {
+        color: $darktext;
+        display: inline-block;
+    }
+
+    .toolbar__buttons, .toolbar__stats {
+        display: none;
+    }
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: $foreground;
+    display: inline-block;
+    line-height: 1;
+  
+    &:hover {
+      color: white;
+    }
+  
+    &:focus {
+      outline: 0;
+      text-decoration: underline;
+    }
+  }
