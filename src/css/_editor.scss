@@ -1,5 +1,4 @@
 .editor {
-    padding: 0 0 0 $baseSize;
     position: relative;
   
     label {
@@ -11,7 +10,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      padding: 8px 0 0 0;
+      padding: $baseSize $baseSize 0 $baseSize;
       resize: none;
   
       background: transparent;
