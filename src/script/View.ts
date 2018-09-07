@@ -1,5 +1,6 @@
 export enum ViewEvents {
-    OPEN_FILE = 'open_file'
+    OPEN_FILE = 'open_file',
+    SAVE_FILE = 'save_file'
 }
 
 /**
@@ -11,12 +12,14 @@ export default class View {
     private filename: HTMLElement;
     private fileOpen: HTMLElement;
     private fileOpenHelper: HTMLInputElement;
+    private fileSave: HTMLElement;
     private textarea: HTMLTextAreaElement;
 
     constructor(document: Document) {
         this.toolbar = document.getElementById('toolbar')!;
         this.filename = document.getElementById('filename')!;
         this.fileOpen = document.getElementById('fileOpen')!;
+        this.fileSave = document.getElementById('fileSave')!;
         this.textarea = document.getElementById('textarea') as HTMLTextAreaElement;
 
         this.fileOpenHelper = document.createElement('input');
@@ -35,6 +38,9 @@ export default class View {
                 this.dispatchEvent(ViewEvents.OPEN_FILE, this.fileOpenHelper.files[0])
             }
         }, false);
+        this.fileSave.addEventListener('click', ()=> {
+            this.dispatchEvent(ViewEvents.SAVE_FILE);
+        });
     }
 
     private dispatchEvent(eventKey: ViewEvents, data?: object) {
