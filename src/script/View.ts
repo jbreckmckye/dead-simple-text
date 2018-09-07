@@ -49,27 +49,27 @@ export default class View {
         this.toolbar.dispatchEvent(event);
     }
 
-    public addEventListener(eventKey: ViewEvents, listener: (event: CustomEvent) => void) {
+    public addEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
         this.toolbar.addEventListener(eventKey, listener, false);
-    }
+    };
 
-    public focusContent() {
+    public focusContent = ()=> {
         this.textarea.focus();
-    }
+    };
 
-    public removeEventListener(eventKey: ViewEvents, listener: (event: CustomEvent) => void) {
+    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
         this.toolbar.removeEventListener(eventKey, listener);
-    }
+    };
 
-    public setContent(text: string) {
+    public setContent = (text: string)=> {
         this.textarea.value = text;
-    }
+    };
 
-    public setFilenameText(text: string) {
+    public setFilenameText = (text: string)=> {
         this.filename.innerText = text;
-    }
+    };
 
-    public setUIReady() {
+    public setUIReady = ()=> {
         this.toolbar.classList.remove('toolbar--loading');
-    }
+    };
 }

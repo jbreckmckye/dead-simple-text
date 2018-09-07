@@ -1,31 +1,30 @@
+import Model from './Model';
 import View, {ViewEvents} from './View';
 import {readFile, saveFile} from './util';
 
+const model = new Model();
 const view = new View(document);
 
-let fileName = 'Dead Simple Text.txt';
-let text = '';
+model.filename('Dead Simple Text.txt');
+model.text('');
 
-function updateView() {
-    view.setFilenameText(fileName);
-    view.setContent(text);
-}
+model.filename.subscribe(view.setFilenameText);
+model.text.subscribe(view.setContent);
 
 view.addEventListener(ViewEvents.OPEN_FILE, (event: CustomEvent<File>)=> {
     const file = event.detail;
     if (file) {
         readFile(file).then(data => {
-            fileName = file.name;
-            text = data;
-            updateView();
+            model.filename(file.name);
+            model.text(data);
             view.focusContent();
-        });  
+        });
     }
 });
 
-view.addEventListener(ViewEvents.SAVE_FILE, (event: CustomEvent) => {
-    saveFile(text, fileName);
-});
+view.addEventListener(
+    ViewEvents.SAVE_FILE,
+    ()=> saveFile(model.text(), model.filename())
+);
 
-updateView();
 view.setUIReady();
