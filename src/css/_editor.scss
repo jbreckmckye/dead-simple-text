@@ -1,5 +1,8 @@
 .editor {
     position: relative;
+
+    grid-column-start: mainLeft;
+    grid-column-end: mainRight;
   
     label {
       @include visuallyHidden();

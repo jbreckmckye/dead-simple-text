@@ -5,9 +5,6 @@ import {readFile, saveFile} from './util';
 const model = new Model();
 const view = new View(document);
 
-model.filename('Dead Simple Text.txt');
-model.text('');
-
 model.filename.subscribe(view.setFilenameText);
 model.text.subscribe(view.setContent);
 
@@ -26,5 +23,8 @@ view.addEventListener(
     ViewEvents.SAVE_FILE,
     ()=> saveFile(model.text(), model.filename())
 );
+
+model.filename('Dead Simple Text.txt');
+model.text('');
 
 view.setUIReady();

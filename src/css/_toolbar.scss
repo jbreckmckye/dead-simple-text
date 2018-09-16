@@ -1,6 +1,8 @@
 .toolbar {
-    border-bottom: 1px solid $foreground;
     padding: $baseSize;
+
+    grid-column-start: mainLeft;
+    grid-column-end: mainRight;
 
     display: flex;
     flex-direction: row;
