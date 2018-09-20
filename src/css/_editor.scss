@@ -1,8 +1,8 @@
 .editor {
     position: relative;
 
-    grid-column-start: mainLeft;
-    grid-column-end: mainRight;
+    grid-column-start: endLeft;
+    grid-column-end: endRight;
   
     label {
       @include visuallyHidden();
@@ -13,9 +13,18 @@
       width: 100%;
       height: 100%;
       display: block;
-      padding: $baseSize $baseSize 0 $baseSize;
-      resize: none;
-  
+
+      padding-top: $baseSize;
+      padding-bottom: $baseSize;
+      padding-left: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
+      padding-right: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
+
+      @media screen and (max-width: $mainWidth) {
+        padding-left: $baseSize;
+        padding-right: $baseSize;
+      }
+
+      resize: none;  
       background: transparent;
       color: $midground;
       border: none;
