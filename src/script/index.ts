@@ -26,7 +26,11 @@ view.addEventListener(ViewEvents.OPEN_FILE, (event: CustomEvent<File>)=> {
 
 view.addEventListener(
     ViewEvents.SAVE_FILE,
-    ()=> saveFile(model.text(), model.filename())
+    ()=> {
+        if (model.filename().length) {
+            saveFile(model.text(), model.filename());
+        }
+    }
 );
 
 view.addEventListener(
@@ -40,7 +44,15 @@ view.addEventListener(
         const text = event.detail;
         model.text(text);
     }
-)
+);
+
+view.addEventListener(
+    ViewEvents.FILENAME_CHANGE,
+    (event: CustomEvent) => {
+        const filename = event.detail;
+        model.filename(filename);
+    }
+);
 
 newFile();
 

@@ -55,4 +55,18 @@
       outline: 0;
       text-decoration: underline;
     }
-  }
+}
+
+.subtle-input {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    text-align: right;
+    width: 25em;
+    text-overflow: ellipsis;
+
+    &:focus {
+        outline: 0;
+        text-decoration: underline;
+    }
+}

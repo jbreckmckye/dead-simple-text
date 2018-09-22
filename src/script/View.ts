@@ -2,6 +2,7 @@ export enum ViewEvents {
     NEW_FILE = 'new_file',
     OPEN_FILE = 'open_file',
     SAVE_FILE = 'save_file',
+    FILENAME_CHANGE = 'filename_change',
     TEXT_CHANGE = 'text_change'
 }
 
@@ -11,7 +12,7 @@ export enum ViewEvents {
  */
 export default class View {
     private toolbar: HTMLElement;
-    private filename: HTMLElement;
+    private filename: HTMLInputElement;
     private fileNew: HTMLElement;
     private fileOpen: HTMLElement;
     private fileOpenHelper: HTMLInputElement;
@@ -21,7 +22,7 @@ export default class View {
 
     constructor(document: Document) {
         this.toolbar =  this.getEl('toolbar');
-        this.filename = this.getEl('filename');
+        this.filename = this.getEl('filename') as HTMLInputElement;
         this.fileNew =  this.getEl('fileNew');
         this.fileOpen = this.getEl('fileOpen');
         this.fileSave = this.getEl('fileSave');
@@ -69,6 +70,10 @@ export default class View {
                     this.dispatchEvent(ViewEvents.TEXT_CHANGE, this.textarea.value);
                 }, 100);
             }
+        });
+
+        this.filename.addEventListener('input', ()=> {
+            this.dispatchEvent(ViewEvents.FILENAME_CHANGE, this.filename.value);
         })
     }
 
@@ -95,7 +100,7 @@ export default class View {
     };
 
     public setFilenameText = (text: string)=> {
-        this.filename.innerText = text;
+        this.filename.value = text;
     };
 
     public setUIReady = ()=> {
