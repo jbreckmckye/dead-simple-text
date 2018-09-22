@@ -1,6 +1,8 @@
 export enum ViewEvents {
+    NEW_FILE = 'new_file',
     OPEN_FILE = 'open_file',
-    SAVE_FILE = 'save_file'
+    SAVE_FILE = 'save_file',
+    TEXT_CHANGE = 'text_change'
 }
 
 /**
@@ -10,17 +12,20 @@ export enum ViewEvents {
 export default class View {
     private toolbar: HTMLElement;
     private filename: HTMLElement;
+    private fileNew: HTMLElement;
     private fileOpen: HTMLElement;
     private fileOpenHelper: HTMLInputElement;
     private fileSave: HTMLElement;
     private textarea: HTMLTextAreaElement;
+    private textAreaChangeCallback: number | undefined;
 
     constructor(document: Document) {
-        this.toolbar = document.getElementById('toolbar')!;
-        this.filename = document.getElementById('filename')!;
-        this.fileOpen = document.getElementById('fileOpen')!;
-        this.fileSave = document.getElementById('fileSave')!;
-        this.textarea = document.getElementById('textarea') as HTMLTextAreaElement;
+        this.toolbar =  this.getEl('toolbar');
+        this.filename = this.getEl('filename');
+        this.fileNew =  this.getEl('fileNew');
+        this.fileOpen = this.getEl('fileOpen');
+        this.fileSave = this.getEl('fileSave');
+        this.textarea = this.getEl('textarea') as HTMLTextAreaElement;
 
         this.fileOpenHelper = document.createElement('input');
         this.fileOpenHelper.type = 'file';
@@ -29,22 +34,46 @@ export default class View {
         this.addEvents();
     }
 
+    private getEl(id: string) {
+        const result = document.getElementById(id);
+        if (!result) {
+            throw new Error(`No element found for selector ${id}`);
+        } else {
+            return result;
+        }
+    }
+
     private addEvents() {
         this.fileOpen.addEventListener('click', ()=> {
             this.fileOpenHelper.click();
         }, false);
+
         this.fileOpenHelper.addEventListener('change', ()=> {
             if (this.fileOpenHelper.files) {
                 this.dispatchEvent(ViewEvents.OPEN_FILE, this.fileOpenHelper.files[0])
             }
         }, false);
+
         this.fileSave.addEventListener('click', ()=> {
             this.dispatchEvent(ViewEvents.SAVE_FILE);
         });
+
+        this.fileNew.addEventListener('click', ()=> {
+            this.dispatchEvent(ViewEvents.NEW_FILE);
+        });
+
+        this.textarea.addEventListener('input', ()=> {
+            if (!this.textAreaChangeCallback) {
+                window.setTimeout(()=> {
+                    this.textAreaChangeCallback = undefined;
+                    this.dispatchEvent(ViewEvents.TEXT_CHANGE, this.textarea.value);
+                }, 100);
+            }
+        })
     }
 
-    private dispatchEvent(eventKey: ViewEvents, data?: object) {
-        const eventData = data ? {detail: data} : undefined;
+    private dispatchEvent(eventKey: ViewEvents, data?: any) {
+        const eventData = nonEmpty(data) ? {detail: data} : undefined;
         const event = new CustomEvent(eventKey, eventData);
         this.toolbar.dispatchEvent(event);
     }
@@ -72,4 +101,8 @@ export default class View {
     public setUIReady = ()=> {
         this.toolbar.classList.remove('toolbar--loading');
     };
+}
+
+function nonEmpty(subject: any) {
+    return subject !== undefined && subject !== null;
 }

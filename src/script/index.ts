@@ -5,6 +5,11 @@ import {readFile, saveFile} from './util';
 const model = new Model();
 const view = new View(document);
 
+function newFile() {
+    model.filename('Dead Simple Text.txt');
+    model.text('');
+}
+
 model.filename.subscribe(view.setFilenameText);
 model.text.subscribe(view.setContent);
 
@@ -24,7 +29,19 @@ view.addEventListener(
     ()=> saveFile(model.text(), model.filename())
 );
 
-model.filename('Dead Simple Text.txt');
-model.text('');
+view.addEventListener(
+    ViewEvents.NEW_FILE,
+    newFile
+);
+
+view.addEventListener(
+    ViewEvents.TEXT_CHANGE,
+    (event: CustomEvent) => {
+        const text = event.detail;
+        model.text(text);
+    }
+)
+
+newFile();
 
 view.setUIReady();
