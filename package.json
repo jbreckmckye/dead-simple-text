@@ -21,6 +21,6 @@
     "typescript": "3.0.3"
   },
   "dependencies": {
-    "trkl": "^1.9.2"
+    "trkl": "1.9.2"
   }
 }

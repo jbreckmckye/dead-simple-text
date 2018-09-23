@@ -47,6 +47,13 @@ view.addEventListener(
 );
 
 view.addEventListener(
+    ViewEvents.INSERT_TAB,
+    (event: CustomEvent) => {
+        model.text(model.text() + '    ');
+    }
+)
+
+view.addEventListener(
     ViewEvents.FILENAME_CHANGE,
     (event: CustomEvent) => {
         const filename = event.detail;

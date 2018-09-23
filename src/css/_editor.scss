@@ -9,30 +9,30 @@
     }
   
     textarea {
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: block;
 
-      padding-top: $baseSize;
-      padding-bottom: $baseSize;
-      padding-left: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
-      padding-right: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
+        padding-top: $baseSize;
+        padding-bottom: $baseSize;
+        padding-left: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
+        padding-right: calc(((100vw - #{$mainWidth})/2) + #{$baseSize});
 
-      @media screen and (max-width: $mainWidth) {
-        padding-left: $baseSize;
-        padding-right: $baseSize;
-      }
+        @media screen and (max-width: $mainWidth) {
+          padding-left: $baseSize;
+          padding-right: $baseSize;
+        }
 
-      resize: none;  
-      background: transparent;
-      color: $midground;
-      border: none;
-      font-size: $baseSize; 
-  
-      &:focus {
-        outline: 0;
-        color: $foreground;
-      }
+        resize: none;  
+        background: transparent;
+        color: $midground;
+        border: none;
+        font-size: $baseSize; 
+    
+        &:focus {
+          outline: 0;
+          color: $foreground;
+        }
     }
-  }
+}

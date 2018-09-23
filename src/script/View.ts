@@ -3,7 +3,8 @@ export enum ViewEvents {
     OPEN_FILE = 'open_file',
     SAVE_FILE = 'save_file',
     FILENAME_CHANGE = 'filename_change',
-    TEXT_CHANGE = 'text_change'
+    TEXT_CHANGE = 'text_change',
+    INSERT_TAB = 'insert_tab'
 }
 
 /**
@@ -21,12 +22,12 @@ export default class View {
     private textAreaChangeCallback: number | undefined;
 
     constructor(document: Document) {
-        this.toolbar =  this.getEl('toolbar');
-        this.filename = this.getEl('filename') as HTMLInputElement;
-        this.fileNew =  this.getEl('fileNew');
-        this.fileOpen = this.getEl('fileOpen');
-        this.fileSave = this.getEl('fileSave');
-        this.textarea = this.getEl('textarea') as HTMLTextAreaElement;
+        this.toolbar =      this.getEl('toolbar');
+        this.filename =     this.getEl('filename') as HTMLInputElement;
+        this.fileNew =      this.getEl('fileNew');
+        this.fileOpen =     this.getEl('fileOpen');
+        this.fileSave =     this.getEl('fileSave');
+        this.textarea =     this.getEl('textarea') as HTMLTextAreaElement;
 
         this.fileOpenHelper = document.createElement('input');
         this.fileOpenHelper.type = 'file';
@@ -65,16 +66,29 @@ export default class View {
 
         this.textarea.addEventListener('input', ()=> {
             if (!this.textAreaChangeCallback) {
-                window.setTimeout(()=> {
+                this.textAreaChangeCallback = window.setTimeout(()=> {
                     this.textAreaChangeCallback = undefined;
                     this.dispatchEvent(ViewEvents.TEXT_CHANGE, this.textarea.value);
                 }, 100);
             }
         });
 
+        this.textarea.addEventListener('keydown', (e: KeyboardEvent) => {
+            // Trap tab
+            if (e.key == 'Tab') {
+                e.preventDefault();
+                this.dispatchEvent(ViewEvents.INSERT_TAB);
+
+            // Untrap tab
+            } else if (e.key == 'F6') {
+                e.preventDefault();
+                this.fileNew.focus();
+            }
+        });
+
         this.filename.addEventListener('input', ()=> {
             this.dispatchEvent(ViewEvents.FILENAME_CHANGE, this.filename.value);
-        })
+        });
     }
 
     private dispatchEvent(eventKey: ViewEvents, data?: any) {
