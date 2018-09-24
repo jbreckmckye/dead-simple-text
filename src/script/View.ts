@@ -2,9 +2,8 @@ export enum ViewEvents {
     NEW_FILE = 'new_file',
     OPEN_FILE = 'open_file',
     SAVE_FILE = 'save_file',
-    FILENAME_CHANGE = 'filename_change',
-    TEXT_CHANGE = 'text_change',
-    INSERT_TAB = 'insert_tab'
+    INSERT_TAB = 'insert_tab',
+    LENGTH_CHANGE = 'length_change'
 }
 
 /**
@@ -36,6 +35,35 @@ export default class View {
         this.addEvents();
     }
 
+    public addEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
+        this.toolbar.addEventListener(eventKey, listener, false);
+    };
+
+    public focusContent = ()=> {
+        this.textarea.focus();
+    };
+
+    public getContent = ()=> this.textarea.value;
+    public getFilename = ()=> this.filename.value;
+
+    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
+        this.toolbar.removeEventListener(eventKey, listener);
+    };
+
+    public setContent = (text: string)=> {
+        this.textarea.value = text;
+    };
+
+    public setFilenameText = (text: string)=> {
+        this.filename.value = text;
+    };
+
+    public setUIReady = ()=> {
+        this.toolbar.classList.remove('toolbar--loading');
+    };
+
+    public textChangedFlag = false;
+
     private getEl(id: string) {
         const result = document.getElementById(id);
         if (!result) {
@@ -65,11 +93,8 @@ export default class View {
         });
 
         this.textarea.addEventListener('input', ()=> {
-            if (!this.textAreaChangeCallback) {
-                this.textAreaChangeCallback = window.setTimeout(()=> {
-                    this.textAreaChangeCallback = undefined;
-                    this.dispatchEvent(ViewEvents.TEXT_CHANGE, this.textarea.value);
-                }, 100);
+            if (!this.textChangedFlag) {
+                this.textChangedFlag = true;
             }
         });
 
@@ -85,10 +110,6 @@ export default class View {
                 this.fileNew.focus();
             }
         });
-
-        this.filename.addEventListener('input', ()=> {
-            this.dispatchEvent(ViewEvents.FILENAME_CHANGE, this.filename.value);
-        });
     }
 
     private dispatchEvent(eventKey: ViewEvents, data?: any) {
@@ -96,30 +117,6 @@ export default class View {
         const event = new CustomEvent(eventKey, eventData);
         this.toolbar.dispatchEvent(event);
     }
-
-    public addEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
-        this.toolbar.addEventListener(eventKey, listener, false);
-    };
-
-    public focusContent = ()=> {
-        this.textarea.focus();
-    };
-
-    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
-        this.toolbar.removeEventListener(eventKey, listener);
-    };
-
-    public setContent = (text: string)=> {
-        this.textarea.value = text;
-    };
-
-    public setFilenameText = (text: string)=> {
-        this.filename.value = text;
-    };
-
-    public setUIReady = ()=> {
-        this.toolbar.classList.remove('toolbar--loading');
-    };
 }
 
 function nonEmpty(subject: any) {

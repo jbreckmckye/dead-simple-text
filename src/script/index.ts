@@ -1,65 +1,40 @@
-import Model from './Model';
 import View, {ViewEvents} from './View';
 import {readFile, saveFile} from './util';
 
-const model = new Model();
 const view = new View(document);
 
 function newFile() {
-    model.filename('Dead Simple Text.txt');
-    model.text('');
+    view.setFilenameText('Dead Simple Text.txt');
+    view.setContent('');
 }
 
-model.filename.subscribe(view.setFilenameText);
-model.text.subscribe(view.setContent);
+view.addEventListener(ViewEvents.NEW_FILE, newFile);
 
 view.addEventListener(ViewEvents.OPEN_FILE, (event: CustomEvent<File>)=> {
     const file = event.detail;
     if (file) {
         readFile(file).then(data => {
-            model.filename(file.name);
-            model.text(data);
+            view.setFilenameText(file.name);
+            view.setContent(data);
             view.focusContent();
         });
     }
 });
 
-view.addEventListener(
-    ViewEvents.SAVE_FILE,
-    ()=> {
-        if (model.filename().length) {
-            saveFile(model.text(), model.filename());
-        }
+view.addEventListener(ViewEvents.SAVE_FILE, ()=> {
+    const filename = view.getFilename();
+    if (filename.length) {
+        const text = view.getContent();
+        saveFile(text, filename);
+    } else {
+        window.alert('Please provide a filename');
     }
-);
+});
 
-view.addEventListener(
-    ViewEvents.NEW_FILE,
-    newFile
-);
-
-view.addEventListener(
-    ViewEvents.TEXT_CHANGE,
-    (event: CustomEvent) => {
-        const text = event.detail;
-        model.text(text);
-    }
-);
-
-view.addEventListener(
-    ViewEvents.INSERT_TAB,
-    (event: CustomEvent) => {
-        model.text(model.text() + '    ');
-    }
-)
-
-view.addEventListener(
-    ViewEvents.FILENAME_CHANGE,
-    (event: CustomEvent) => {
-        const filename = event.detail;
-        model.filename(filename);
-    }
-);
+view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
+    const text = view.getContent();
+    view.setContent(text + '    ');
+});
 
 newFile();
 
