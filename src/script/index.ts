@@ -32,8 +32,21 @@ view.addEventListener(ViewEvents.SAVE_FILE, ()=> {
 });
 
 view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
+    const [cursorStart, cursorEnd] = view.getCursor();
     const text = view.getContent();
-    view.setContent(text + '    ');
+
+    if (cursorStart == cursorEnd) {
+        // No selection
+        const before = text.slice(0, cursorStart);
+        const after = text.slice(cursorStart);
+        const newPosition = cursorStart + 4;
+        view.setContent(before + '    ' + after);
+        view.setCursor(newPosition, newPosition);
+
+    } else {
+        // Selection
+        console.log('Operation not supported at this time');
+    }
 });
 
 newFile();

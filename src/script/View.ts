@@ -44,7 +44,9 @@ export default class View {
     };
 
     public getContent = ()=> this.textarea.value;
+    public getCursor = ()=> [this.textarea.selectionStart, this.textarea.selectionEnd];
     public getFilename = ()=> this.filename.value;
+    public getCursorPosition = ()=> this.textarea.selectionStart;
 
     public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
         this.toolbar.removeEventListener(eventKey, listener);
@@ -53,6 +55,10 @@ export default class View {
     public setContent = (text: string)=> {
         this.textarea.value = text;
     };
+
+    public setCursor = (start: number, end: number) => {
+        this.textarea.setSelectionRange(start, end);
+    }
 
     public setFilenameText = (text: string)=> {
         this.filename.value = text;
