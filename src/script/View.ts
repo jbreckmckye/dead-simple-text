@@ -3,7 +3,8 @@ export enum ViewEvents {
     OPEN_FILE = 'open_file',
     SAVE_FILE = 'save_file',
     INSERT_TAB = 'insert_tab',
-    LENGTH_CHANGE = 'length_change'
+    LENGTH_CHANGE = 'length_change', // todo
+    UNINSERT_TAB = 'uninsert_tab' // todo
 }
 
 /**
@@ -18,7 +19,7 @@ export default class View {
     private fileOpenHelper: HTMLInputElement;
     private fileSave: HTMLElement;
     private textarea: HTMLTextAreaElement;
-    private textAreaChangeCallback: number | undefined;
+    private shiftOn: boolean;
 
     constructor(document: Document) {
         this.toolbar =      this.getEl('toolbar');
@@ -31,6 +32,8 @@ export default class View {
         this.fileOpenHelper = document.createElement('input');
         this.fileOpenHelper.type = 'file';
         this.fileOpenHelper.accept = '.css,.markdown,.md,.js,.json,.jsx,.scss,.svg,.ts,.tsx,.txt,.xml';
+
+        this.shiftOn = false;
 
         this.addEvents();
     }
@@ -108,12 +111,28 @@ export default class View {
             // Trap tab
             if (e.key == 'Tab') {
                 e.preventDefault();
-                this.dispatchEvent(ViewEvents.INSERT_TAB);
+                if (!this.shiftOn) {
+                    this.dispatchEvent(ViewEvents.INSERT_TAB);
+                } else {
+                    this.dispatchEvent(ViewEvents.UNINSERT_TAB);
+                }                
 
             // Untrap tab
             } else if (e.key == 'F6') {
                 e.preventDefault();
                 this.fileNew.focus();
+
+            // Switch shift
+            } else if (e.key == 'Shift') {
+                // No prevent default
+                this.shiftOn = true;
+            }
+        });
+
+        this.textarea.addEventListener('keyup', (e: KeyboardEvent) => {
+            // Switch shift
+            if (e.key == 'Shift') {
+                this.shiftOn = false;
             }
         });
     }

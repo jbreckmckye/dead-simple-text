@@ -45,7 +45,34 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
 
     } else {
         // Selection
-        console.log('Operation not supported at this time');
+        const lines = text.split('\n');
+
+        let position = 0;
+        let newText = '';
+        let tabsInserted = 0;
+
+        lines.forEach(line => {
+            const startPoint = position;
+            const endPoint = position + line.length;
+            const lineSelected = (endPoint >= cursorStart) && (startPoint <= cursorEnd);
+            const isFinal = endPoint == text.length;
+
+            if (lineSelected) {
+                newText += ('    ' + line);
+                tabsInserted++;
+            } else {
+                newText += line;
+            }
+
+            if (!isFinal) {
+                newText += '\n';
+            }
+
+            position = endPoint + 1;
+        });
+
+        view.setContent(newText);
+        view.setCursor(cursorStart, cursorEnd + (tabsInserted * 4));
     }
 });
 
