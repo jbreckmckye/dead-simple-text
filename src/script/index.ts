@@ -1,7 +1,7 @@
 import View, {ViewEvents} from './View';
 import {readFile, saveFile} from './util';
 
-const view = new View(document);
+const view = new View();
 
 function newFile() {
     view.setFilenameText('Dead Simple Text.txt');
@@ -36,12 +36,7 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
     const text = view.getContent();
 
     if (cursorStart == cursorEnd) {
-        // No selection
-        const before = text.slice(0, cursorStart);
-        const after = text.slice(cursorStart);
-        const newPosition = cursorStart + 4;
-        view.setContent(before + '    ' + after);
-        view.setCursor(newPosition, newPosition);
+        document.execCommand('insertText', undefined, '    ');
 
     } else {
         // Selection

@@ -21,7 +21,7 @@ export default class View {
     private textarea: HTMLTextAreaElement;
     private shiftOn: boolean;
 
-    constructor(document: Document) {
+    constructor() {
         this.toolbar =      this.getEl('toolbar');
         this.filename =     this.getEl('filename') as HTMLInputElement;
         this.fileNew =      this.getEl('fileNew');
@@ -61,7 +61,7 @@ export default class View {
 
     public setCursor = (start: number, end: number) => {
         this.textarea.setSelectionRange(start, end);
-    }
+    };
 
     public setFilenameText = (text: string)=> {
         this.filename.value = text;
