@@ -1,5 +1,5 @@
 import View, {ViewEvents} from './View';
-import {readFile, saveFile} from './util';
+import {readFile, saveFile, trimEnd} from './util';
 
 const view = new View();
 
@@ -25,7 +25,8 @@ view.addEventListener(ViewEvents.SAVE_FILE, ()=> {
     const filename = view.getFilename();
     if (filename.length) {
         const text = view.getContent();
-        saveFile(text, filename);
+        const cleanedText = trimEnd(text);
+        saveFile(cleanedText, filename);
     } else {
         window.alert('Please provide a filename');
     }

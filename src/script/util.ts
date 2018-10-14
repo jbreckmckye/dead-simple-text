@@ -24,3 +24,12 @@ export function saveFile(text: string, name: string) {
     // Prevents memory leaks
     URL.revokeObjectURL(objURL);
 }
+
+export function trimEnd(text: string) {
+    const trimPoint = text.match(/(\s)+$/g);
+    if (trimPoint) {
+        return text.substr(0, trimPoint.index);
+    } else {
+        return text;
+    }
+}
