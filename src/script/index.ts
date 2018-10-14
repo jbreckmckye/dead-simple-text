@@ -47,27 +47,28 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
         let tabsInserted = 0;
 
         lines.forEach(line => {
-            const startPoint = position;
-            const endPoint = position + line.length;
-            const lineSelected = (endPoint >= cursorStart) && (startPoint <= cursorEnd);
-            const isFinal = endPoint == text.length;
+            const startCharPos = position;
+            const endCharPos = position + line.length;
+            const lineContainsSelection = (endCharPos >= cursorStart) && (startCharPos <= cursorEnd);
+            const isLastLine = endCharPos == text.length;
 
-            if (lineSelected) {
+            if (lineContainsSelection) {
                 newText += ('    ' + line);
                 tabsInserted++;
             } else {
                 newText += line;
             }
 
-            if (!isFinal) {
+            if (!isLastLine) {
                 newText += '\n';
             }
 
-            position = endPoint + 1;
+            position = endCharPos + 1;
         });
 
-        view.setContent(newText);
-        view.setCursor(cursorStart, cursorEnd + (tabsInserted * 4));
+        document.execCommand('selectAll');
+        document.execCommand('insertText', undefined, newText);
+        view.setCursor(cursorStart, cursorEnd + (4 * tabsInserted));
     }
 });
 

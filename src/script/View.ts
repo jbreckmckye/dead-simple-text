@@ -55,7 +55,9 @@ export default class View {
         this.toolbar.removeEventListener(eventKey, listener);
     };
 
-    public setContent = (text: string)=> {
+    public setContent = (text: string) => {
+        // Mutations here will break the textare undo/redo stack.
+        // Only use this when initialising a document. Otherwise, use document.execCommand.
         this.textarea.value = text;
     };
 
