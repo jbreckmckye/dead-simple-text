@@ -47,6 +47,7 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
         let newText = '';
         let lastLineEnd = 0;
         let tabsInserted = 0;
+        let startOnLineBreak = false;
 
         for (let i = 0; i < lines.length; i++) {
             const start = lastLineEnd;
@@ -58,6 +59,11 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
 
             if (end > cursorStart && start < cursorEnd) {
                 newText += tab;
+                tabsInserted++;
+            }
+
+            if (start == cursorStart) {
+                startOnLineBreak = true;
             }
 
             newText += lines[i];
@@ -66,7 +72,10 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
 
         document.execCommand('selectAll');
         document.execCommand('insertText', undefined, newText);
-        view.setCursor(0, 0);
+
+        const nextCursorStart = startOnLineBreak ? cursorStart : cursorStart + tab.length;
+        const nextCursorEnd = cursorEnd + (tabsInserted * tab.length);
+        view.setCursor(nextCursorStart, nextCursorEnd);
     }
 });
 
