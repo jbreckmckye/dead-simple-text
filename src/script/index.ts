@@ -35,41 +35,38 @@ view.addEventListener(ViewEvents.SAVE_FILE, ()=> {
 view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
     const [cursorStart, cursorEnd] = view.getCursor();
     const text = view.getContent();
+    const tab = '    ';
 
     if (cursorStart == cursorEnd) {
-        document.execCommand('insertText', undefined, '    ');
+        document.execCommand('insertText', undefined, tab);
 
     } else {
         // Selection
-        const lines = text.split('\n');
+        const lines = text.split(/\r\n|\r|\n/);
 
-        let position = 0;
         let newText = '';
+        let lastLineEnd = 0;
         let tabsInserted = 0;
 
-        lines.forEach(line => {
-            const startCharPos = position;
-            const endCharPos = position + line.length;
-            const lineContainsSelection = (endCharPos >= cursorStart) && (startCharPos <= cursorEnd);
-            const isLastLine = endCharPos == text.length;
+        for (let i = 0; i < lines.length; i++) {
+            const start = lastLineEnd;
+            const end = lastLineEnd + lines[i].length + 1;
 
-            if (lineContainsSelection) {
-                newText += ('    ' + line);
-                tabsInserted++;
-            } else {
-                newText += line;
-            }
-
-            if (!isLastLine) {
+            if (i > 0) {
                 newText += '\n';
             }
 
-            position = endCharPos + 1;
-        });
+            if (end > cursorStart && start < cursorEnd) {
+                newText += tab;
+            }
+
+            newText += lines[i];
+            lastLineEnd = end;
+        }
 
         document.execCommand('selectAll');
         document.execCommand('insertText', undefined, newText);
-        view.setCursor(cursorStart, cursorEnd + (4 * tabsInserted));
+        view.setCursor(0, 0);
     }
 });
 
