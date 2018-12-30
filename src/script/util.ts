@@ -1,3 +1,5 @@
+type LineTransformation = (lineText: string, index: number, inSelection: boolean) => string;
+
 const fileType = {
     type: 'text/plain;charset=utf-8'
 };
@@ -32,4 +34,8 @@ export function trimEnd(text: string) {
     } else {
         return text;
     }
+}
+
+export function toLines(text: string) {
+    return text.split(/\r\n|\r|\n/);
 }

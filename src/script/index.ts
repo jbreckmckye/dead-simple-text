@@ -1,5 +1,5 @@
 import View, {ViewEvents} from './View';
-import {readFile, saveFile, trimEnd} from './util';
+import {readFile, saveFile, trimEnd, toLines} from './util';
 
 const view = new View();
 
@@ -41,8 +41,7 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
         document.execCommand('insertText', undefined, tab);
 
     } else {
-        // Selection
-        const lines = text.split(/\r\n|\r|\n/);
+        const lines = toLines(text);
 
         let newText = '';
         let lastLineEnd = 0;
@@ -81,6 +80,55 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
     }
 });
 
-newFile();
+view.addEventListener(ViewEvents.UNINSERT_TAB, (event: CustomEvent) => {
+    const [cursorStart, cursorEnd] = view.getCursor();
+    const text = view.getContent();
+    const initialSpaces = /^    /g;
 
+    if (cursorStart != cursorEnd) {
+        const lines = toLines(text);
+
+        let newText = '';
+        let lastLineEnd = 0;
+        let spacesRemoved = 0;
+        let startOnLineBreak = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const start = lastLineEnd;
+            const end = lastLineEnd + line.length + 1;
+
+            let lineTransformed = line;
+
+            if (i > 0) {
+                newText += '\n';
+            }
+
+            if (end > cursorStart && start < cursorEnd) {
+                lineTransformed = line.replace(initialSpaces, '');
+                console.log(lineTransformed, 'and', line);
+            }
+
+            if (start == cursorStart) {
+                startOnLineBreak = true;
+            }
+
+            newText += lineTransformed;
+            spacesRemoved += (line.length - lineTransformed.length);
+            console.log(spacesRemoved, 'spaces removed')  
+            lastLineEnd = end;
+        }
+
+        document.execCommand('selectAll');
+        document.execCommand('insertText', undefined, newText);
+
+        const nextCursorStart = startOnLineBreak
+            ? cursorStart
+            : cursorStart - 4;
+        const nextCursorEnd = cursorEnd - spacesRemoved;
+        view.setCursor(nextCursorStart, nextCursorEnd);
+    }
+});
+
+newFile();
 view.setUIReady();
