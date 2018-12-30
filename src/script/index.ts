@@ -73,7 +73,9 @@ view.addEventListener(ViewEvents.INSERT_TAB, (event: CustomEvent) => {
         document.execCommand('selectAll');
         document.execCommand('insertText', undefined, newText);
 
-        const nextCursorStart = startOnLineBreak ? cursorStart : cursorStart + tab.length;
+        const nextCursorStart = startOnLineBreak 
+            ? cursorStart 
+            : cursorStart + tab.length;
         const nextCursorEnd = cursorEnd + (tabsInserted * tab.length);
         view.setCursor(nextCursorStart, nextCursorEnd);
     }
