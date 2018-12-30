@@ -17,7 +17,7 @@ I wrote DST for fairly simple reasons: I wanted a cross-platform 'distraction fr
 - `Save` saves to the downloads folder
 - `TAB` indents the selection
 - `SHIFT+TAB` unindents the selection
-- `F6` untrabs the tab key (for visually impaired users)
+- `F6` untraps the tab key (for visually impaired users)
 
 If you want to save a file to a location other than your 'downloads', you'll need to configure your browser to let you specify download locations. In Chrome this is called _Ask where to save each file before downloading_.
 
