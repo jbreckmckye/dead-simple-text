@@ -1,6 +1,7 @@
 ﻿# Dead Simple Text
 
 Sometimes you just need plain text:
+
 http://www.breck-mckye.com/dead-simple-text/
 
 ![image](https://user-images.githubusercontent.com/3148617/50551486-ef2fb200-0c78-11e9-84a8-b73da67f5a4e.png)
