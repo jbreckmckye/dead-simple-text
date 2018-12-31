@@ -11,7 +11,6 @@ Dead Simple Text is a web-based text editor with minimalistic design inspired by
 I wrote DST for fairly simple reasons: I wanted a cross-platform 'distraction free' text editor, and the ones that existed never quite satisfied me aesthetically.
 
 ## Usage
-
 - `New` clears the workspace
 - `Load` opens from the local machine
 - `Save` saves to the downloads folder
@@ -19,8 +18,12 @@ I wrote DST for fairly simple reasons: I wanted a cross-platform 'distraction fr
 - `SHIFT+TAB` unindents the selection
 - `F6` untraps the tab key (for visually impaired users)
 
-If you want to save a file to a location other than your 'downloads', you'll need to configure your browser to let you specify download locations. In Chrome this is called _Ask where to save each file before downloading_.
+### Setting the save location
+If you want to save a file to a location other than your 'downloads', you'll need to configure your browser to ask you for a location every time a website downloads anything. Unfortunately this option is all-or-nothing: if you want it, it'll affect other websites too.
 
+In Chrome the config item is labelled _Ask where to save each file before downloading_.
+
+### How do I set a filename?
 The filename is in the top right - click to edit it.
 
 ## Building locally
