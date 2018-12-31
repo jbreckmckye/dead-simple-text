@@ -2,7 +2,7 @@
 
 Sometimes you just need plain text:
 
-http://www.breck-mckye.com/dead-simple-text/
+https://www.breck-mckye.com/dead-simple-text/
 
 Dead Simple Text is a web-based text editor with minimalistic design inspired by MS DOS editors of old. It can open files from the user's filesystem and save them back to a user-specified downloads folder.
 
