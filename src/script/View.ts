@@ -39,7 +39,7 @@ export default class View {
     }
 
     public addEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
-        this.toolbar.addEventListener(eventKey, listener, false);
+        document.body.addEventListener(eventKey, listener, false);
     };
 
     public focusContent = ()=> {
@@ -51,8 +51,8 @@ export default class View {
     public getFilename = ()=> this.filename.value;
     public getCursorPosition = ()=> this.textarea.selectionStart;
 
-    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
-        this.toolbar.removeEventListener(eventKey, listener);
+    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void) => {
+        document.body.removeEventListener(eventKey, listener);
     };
 
     public setContent = (text: string) => {
@@ -65,7 +65,7 @@ export default class View {
         this.textarea.setSelectionRange(start, end);
     };
 
-    public setFilenameText = (text: string)=> {
+    public setFilenameText = (text: string) => {
         this.filename.value = text;
     };
 
@@ -142,7 +142,7 @@ export default class View {
     private dispatchEvent(eventKey: ViewEvents, data?: any) {
         const eventData = nonEmpty(data) ? {detail: data} : undefined;
         const event = new CustomEvent(eventKey, eventData);
-        this.toolbar.dispatchEvent(event);
+        document.body.dispatchEvent(event);
     }
 }
 
