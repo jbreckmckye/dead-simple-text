@@ -106,7 +106,6 @@ view.addEventListener(ViewEvents.UNINSERT_TAB, (event: CustomEvent) => {
 
             if (end > cursorStart && start < cursorEnd) {
                 lineTransformed = line.replace(initialSpaces, '');
-                console.log(lineTransformed, 'and', line);
             }
 
             if (start == cursorStart) {
@@ -115,7 +114,6 @@ view.addEventListener(ViewEvents.UNINSERT_TAB, (event: CustomEvent) => {
 
             newText += lineTransformed;
             spacesRemoved += (line.length - lineTransformed.length);
-            console.log(spacesRemoved, 'spaces removed')  
             lastLineEnd = end;
         }
 
