@@ -1,6 +1,7 @@
 .app {
   background: $background;
   height: 100%;
+  overflow: hidden;
 
   display: grid;
   grid-template-columns: [endLeft] auto [mainLeft] $mainWidth [mainRight] auto [endRight];
