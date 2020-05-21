@@ -30,4 +30,4 @@ The filename is in the top right - click to edit it.
 
 ## Building locally
 
-`npm run build && npm run bundle`
+`npm run build`

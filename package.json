@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build src/index.html --experimental-scope-hoisting --public-url /dead-simple-text/",
-    "bundle": "zip -r dist.zip ./dist",
     "clean": "rm -rf dist",
     "start": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
