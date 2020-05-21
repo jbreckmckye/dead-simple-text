@@ -130,5 +130,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Bundle outputs
-dist.zip
+# Build
+dist
+public
