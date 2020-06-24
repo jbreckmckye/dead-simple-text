@@ -4,7 +4,7 @@ Sometimes you just need plain text:
 
 https://www.breck-mckye.com/dead-simple-text/
 
-Dead Simple Text is a web-based text editor with minimalistic design inspired by MS DOS editors of old. It can open files from the user's filesystem and save them back to a user-specified downloads folder.
+Dead Simple Text is a web-based text editor with minimalistic design inspired by MS DOS edit / QBASIC. It can open files from the user's filesystem and save them back to a user-specified downloads folder.
 
 I wrote this for myself as an aid for writing notes, stories, blog posts etc. It's shared here in case anyone else would like to play with it.
 
