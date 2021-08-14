@@ -31,3 +31,8 @@ The filename is in the top right - click to edit it.
 ## Building locally
 
 `npm run build`
+
+## License
+
+Dead Simple Text is offered as open source software under the AGPL license
+. Copyright Jimmy Breck-McKye 2021
