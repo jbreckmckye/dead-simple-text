@@ -5,6 +5,7 @@
 
     // Target language level
     "target": "es2016",
+    "lib": ["es2016", "dom"],
 
     // Explodes if type cannot be inferred
     "noImplicitAny": true,
@@ -25,6 +26,6 @@
     // Transpile JSX files to React-Hyperscript
     "jsx": "react"
   },
-  "include": ["script/**/*", "types/*"],
+  "include": ["**/*"],
   "exclude": ["node_modules"]
 }
