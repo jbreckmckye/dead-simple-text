@@ -133,3 +133,5 @@ Temporary Items
 # Build
 dist
 public
+
+.parcel-cache

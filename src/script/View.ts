@@ -1,17 +1,6 @@
-export enum ViewEvents {
-    NEW_FILE = 'new_file',
-    OPEN_FILE = 'open_file',
-    SAVE_FILE = 'save_file',
-    INSERT_TAB = 'insert_tab',
-    LENGTH_CHANGE = 'length_change', // todo
-    UNINSERT_TAB = 'uninsert_tab' // todo
-}
+import { eventBus } from "./state";
 
-/**
- * Abstracts over the DOM.
- * Might eschew this for a better pattern.
- */
-export default class View {
+export class View {
     private toolbar: HTMLElement;
     private filename: HTMLInputElement;
     private fileNew: HTMLElement;
@@ -38,10 +27,6 @@ export default class View {
         this.addEvents();
     }
 
-    public addEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void)=> {
-        document.body.addEventListener(eventKey, listener, false);
-    };
-
     public focusContent = ()=> {
         this.textarea.focus();
     };
@@ -51,12 +36,8 @@ export default class View {
     public getFilename = ()=> this.filename.value;
     public getCursorPosition = ()=> this.textarea.selectionStart;
 
-    public removeEventListener = (eventKey: ViewEvents, listener: (event: CustomEvent) => void) => {
-        document.body.removeEventListener(eventKey, listener);
-    };
-
     public setContent = (text: string) => {
-        // Mutations here will break the textare undo/redo stack.
+        // Mutations here will break the textarea undo/redo stack.
         // Only use this when initialising a document. Otherwise, use document.execCommand.
         this.textarea.value = text;
     };
@@ -91,16 +72,19 @@ export default class View {
 
         this.fileOpenHelper.addEventListener('change', ()=> {
             if (this.fileOpenHelper.files) {
-                this.dispatchEvent(ViewEvents.OPEN_FILE, this.fileOpenHelper.files[0])
+                eventBus({
+                    key: 'OPEN_FILE',
+                    file: this.fileOpenHelper.files[0],
+                });
             }
         }, false);
 
         this.fileSave.addEventListener('click', ()=> {
-            this.dispatchEvent(ViewEvents.SAVE_FILE);
+            eventBus({ key: 'SAVE_FILE' });
         });
 
         this.fileNew.addEventListener('click', ()=> {
-            this.dispatchEvent(ViewEvents.NEW_FILE);
+            eventBus({ key: 'NEW_FILE' });
         });
 
         this.textarea.addEventListener('input', ()=> {
@@ -114,9 +98,9 @@ export default class View {
             if (e.key == 'Tab') {
                 e.preventDefault();
                 if (!this.shiftOn) {
-                    this.dispatchEvent(ViewEvents.INSERT_TAB);
+                    eventBus({ key: 'INSERT_TAB' });
                 } else {
-                    this.dispatchEvent(ViewEvents.UNINSERT_TAB);
+                    eventBus({ key: 'UNINSERT_TAB' });
                 }                
 
             // Untrap tab
@@ -138,14 +122,4 @@ export default class View {
             }
         });
     }
-
-    private dispatchEvent(eventKey: ViewEvents, data?: any) {
-        const eventData = nonEmpty(data) ? {detail: data} : undefined;
-        const event = new CustomEvent(eventKey, eventData);
-        document.body.dispatchEvent(event);
-    }
-}
-
-function nonEmpty(subject: any) {
-    return subject !== undefined && subject !== null;
 }
