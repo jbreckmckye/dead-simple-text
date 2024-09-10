@@ -4,7 +4,7 @@
     "module": "commonjs",
 
     // Target language level
-    "target": "es2016",
+    "target": "es2020",
 
     // Explodes if type cannot be inferred
     "noImplicitAny": true,

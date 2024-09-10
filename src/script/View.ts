@@ -87,6 +87,11 @@ export class View {
             eventBus({ key: 'NEW_FILE' });
         });
 
+        this.filename.addEventListener('change', (e) => {
+            const input = e.target as HTMLInputElement;
+            eventBus({ key: 'CHANGE_FILE_NAME', name: input.value })
+        })
+
         this.textarea.addEventListener('input', ()=> {
             if (!this.textChangedFlag) {
                 this.textChangedFlag = true;
@@ -121,5 +126,9 @@ export class View {
                 this.shiftOn = false;
             }
         });
+
+        this.textarea.addEventListener('change', () => {
+            eventBus({ key: 'TEXT_CHANGE' });
+        })
     }
 }
