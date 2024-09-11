@@ -2,9 +2,8 @@
   "name": "dead-simple-text",
   "version": "1.0.0",
   "description": "Sometimes you just need plain text",
-  "main": "index.js",
   "scripts": {
-    "build": "parcel build src/index.html --experimental-scope-hoisting --public-url /dead-simple-text/",
+    "build": "parcel build src/index.html --public-url /dead-simple-text/",
     "clean": "rm -rf dist",
     "start": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
