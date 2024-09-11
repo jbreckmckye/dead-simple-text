@@ -1,13 +1,12 @@
 sudo: false
 language: node_js
 node_js:
-  - 10 # use nodejs v10 LTS
+  - 18
 cache: npm
 branches:
   only:
     - master # build master branch only
 script:
-  - npm ci
   - chmod +x build.sh
   - ./build.sh
 deploy:
