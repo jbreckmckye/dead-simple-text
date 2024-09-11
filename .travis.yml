@@ -7,6 +7,7 @@ branches:
   only:
     - master # build master branch only
 script:
+  - npm ci
   - chmod +x build.sh
   - ./build.sh
 deploy:
